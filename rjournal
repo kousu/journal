@@ -1,0 +1,13 @@
+#!/bin/sh
+#
+# (c) 2020 nick@kousu.ca, MIT License 
+
+if ! mountpoint -q ~/Notebook; then
+  # mount ~/Notebook if necessary
+  if ! mount ~/Notebook; then
+    # mount will print its own errors
+    exit 1
+  fi
+fi
+
+JOURNAL=~/Notebook/Journal journal "$@"

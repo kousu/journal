@@ -1,0 +1,109 @@
+#!/bin/sh
+#
+# usage: journal [DATE]
+#
+# Opens your $EDITOR with an empty markdown file waiting
+# to be filled. If DATE is not given it defaults to today.
+#
+# Environemnt variables:
+#  $EDITOR - sets what program should open the journal
+#  $JOURNAL - sets the path to the journal's folder
+#
+# The date string takes a humanized format, documented at:
+# https://www.gnu.org/software/coreutils/manual/html_node/Date-input-formats.html
+#
+# Examples:
+#
+# If today is February 12th, 2017 then
+#   journal   # opens $JOURNAL/2017/12
+#   journal Aug 12 2019  # opens $JOURNAL/2019/08/12.md
+#
+#   journal yesterday          # opens $JOURNAL/2017/02/11.md
+#   journal tomorrow           # opens $JOURNAL/2017/02/13.md
+#   journal last wednesday     # opens $JOURNAL/2017/02/08.md
+#   journal last month         # opens $JOURNAL/2017/01/12.md
+#   journal 2 weeks ago 2 days # opens $JOURNAL/2017/01/31.md
+#   journal 3 months ago 1 week 4 days
+#                              # opens $JOURNAL/2016/10/23.md
+#
+#   export JOURNAL=/mnt/remote/journal2
+#   journal 2 day  # opens /mnt/remote/journal2/2017/02/14.md
+#
+# And some more clever combinations:
+#   EDITOR="wc -w" journal last month  # see how many words you wrote exactly one month ago
+#   EDITOR="head" journal monday # see what you were doing at the start of the week
+#   EDITOR="tail" journal last friday # see what you did at the end of last week
+#
+# (c) 2020 nick@kousu.ca, MIT License
+
+# TODO:
+# - [ ] support BSD `date` as well; probably just by disallowing the yesterday/tomorrow feature.
+# - [ ] small bug: because this calls date multiple times, it's possible (e.g. at midnight,
+#       new years, ends of months for the results to be inconsistent.
+#       it would be safer to call date *once* to get the date value, then feed it back in successively to parse it
+# - [ ] it would be nice if this didn't write to disk until the user saved manually,
+#       instead only priming the contents of the buffer for the editor.
+#       so e.g. `EDITOR=cat journal last month` would show you an empty file and not write to disk.
+#       this is probably impossible.
+
+set -e  # catch errors immediately
+
+suffix() {
+  # compute date suffix
+  # inspired by https://wmfexcel.com/2014/11/08/date-formats-a-trick-to-format-date-with-st-nd-rd-th/
+  echo -n "$1"
+  case "$1" in
+    *1)
+      echo -n "st"
+      ;;
+    *2)
+      echo -n "nd"
+      ;;
+    *3)
+      echo -n "rd"
+      ;;
+    *4|*5|*6|*7|*8|*9|*0)
+      echo -n "th"
+      ;;
+  esac
+  echo
+}
+
+strip() {
+    # strip surrounding whitespace
+    # this is really silly
+    echo $1
+}
+
+header() {
+  # print a header for the journal file, like
+  #
+  #   Saturday June the 27th, 2020
+  #   ============================
+  #
+  D=$(suffix "$(date +"%_d")")
+  D=$(strip $D)
+  HEADER="$(date +"%A %B the ${D}, %Y")"
+  echo "$HEADER"
+  echo "$HEADER" | sed s/./=/g  # underline
+}
+
+WHEN=${@:-now}
+date() {
+    /bin/date -d "$WHEN" "$@"
+}
+
+: ${JOURNAL:=~/Journal}
+TODAY="$(date +"%Y/%m/%d")"
+TODAY="$JOURNAL"/"$TODAY".md
+
+if [ ! -e "$TODAY" ]; then
+  mkdir -p "$(dirname "$TODAY")"
+  (header; echo; echo) >> "$TODAY"
+fi
+
+if [ -z "$EDITOR" ]; then
+  echo "error: \$EDITOR undefined" >/dev/stderr
+  exit 1
+fi
+$EDITOR "$TODAY"
