@@ -1,4 +1,4 @@
-# Shell-friendly journalling
+# Shell-friendly `journal`ling
 
 In the spirit of Unix, provides the `journal` command.
 
