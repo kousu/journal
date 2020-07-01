@@ -1,8 +1,8 @@
 # Shell-friendly `journal`ling
 
-In the spirit of Unix, provides the `journal` command.
+`journal` in the spirit of Unix.
 
-It defines a folder shape to keep your thoughts in, `$JOURNAL/$YEAR/$MONTH/$DAY.md`,
+This defines a folder structure to keep your thoughts in, `$JOURNAL/$YEAR/$MONTH/$DAY.md`,
 titling and opening them for you at a keystroke.
 
 It's meant to encourage your introspection by keeping it close at hand.
@@ -83,6 +83,12 @@ if [ $(($RANDOM % 100)) -lt 30 ]; then
   echo
   EDITOR="head" journal $(($(($RANDOM % 12)) + 2)) days ago
 fi
+```
+
+Make it even more accessible with
+
+```
+alias j=journal
 ```
 
 # TODO
