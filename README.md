@@ -1,10 +1,14 @@
 # Shell-friendly journalling
 
 In the spirit of Unix, provides the `journal` command.
-It defines a folder shape to keep your thoughts in, $JOURNAL/$YEAR/$MONTH/$DAY.md,
-titles and opens them for you. It's meant to encourage diaries and introspection
-by keeping them
-(this is compatible with [Diary.apk](https://f-droid.org/en/packages/org.billthefarmer.diary/), and any basic text editor, or text editor with Markdown support like VSCode or [Ghostwriter](https://github.com/wereturtle/ghostwriter/)).
+
+It defines a folder shape to keep your thoughts in, `$JOURNAL/$YEAR/$MONTH/$DAY.md`,
+titling and opening them for you at a keystroke.
+
+It's meant to encourage your introspection by keeping it close at hand.
+
+Works with (and through) any basic text editor, and is compatible with [Diary.apk](https://f-droid.org/en/packages/org.billthefarmer.diary/) (if you can figure out a way to sync your locked-down Android files with your gnu/looniks freesoftware laptop),
+or any text editor with Markdown support like VSCode or [Ghostwriter](https://github.com/wereturtle/ghostwriter/)).
 
 ## Requirements:
 
