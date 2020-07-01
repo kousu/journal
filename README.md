@@ -31,10 +31,11 @@ ln journal ~/.local/bin/
 
 ( for now: see the comments in the shell script [itself](./journal) )
 
+------------------------------------------
+
 # `rjournal`
 
-This is a script that I use to access my journal from all my devices by mounting it from a remote filesystem.
-
+This is a wrapper script that I use to share my journal across all of my computers.
 
 ## Requirements
 
