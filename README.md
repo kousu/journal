@@ -1,0 +1,2 @@
+# journal
+Shell-friendly journalling
