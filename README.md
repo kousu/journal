@@ -17,7 +17,7 @@ or any text editor with Markdown support like [vscode](https://github.com/Micros
 
 ## Installation
 
-Copy `journal` onto your PATH.
+[Download](https://github.com/kousu/journal/raw/master/journal) and copy `journal` onto your PATH.
 
 You can do this with
 
