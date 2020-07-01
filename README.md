@@ -3,12 +3,12 @@
 `journal` in the spirit of Unix.
 
 This defines a folder structure to keep your thoughts in, `$JOURNAL/$YEAR/$MONTH/$DAY.md`,
-titling and opening them for you at a keystroke.
+titling and opening each file for you at a keystroke.
 
-It's meant to encourage your introspection by keeping it close at hand.
+It's meant to encourage introspection by keeping it close at hand.
 
 Works with (and through) any basic text editor, and is compatible with [Diary.apk](https://f-droid.org/en/packages/org.billthefarmer.diary/) (if you can figure out a way to sync your locked-down Android files with your gnu/looniks freesoftware laptop),
-or any text editor with Markdown support like VSCode or [Ghostwriter](https://github.com/wereturtle/ghostwriter/)).
+or any text editor with Markdown support like [vscode](https://github.com/Microsoft/vscode) or [Ghostwriter](https://github.com/wereturtle/ghostwriter/)).
 
 ## Requirements:
 
