@@ -76,13 +76,13 @@ and you'll be journalling to the cloud. Hooray! (pick your server wisely, yah?)
 
 ## Tips and Tricks
 
-Try adding this to your ~/.profile or ~/.bash_profile:
+Try adding this to your ~/.bashrc:
 
 ```
 if [ $(($RANDOM % 100)) -lt 30 ]; then
   echo "Your Hypertext Memory:"
   echo
-  EDITOR="head" journal $(($(($RANDOM % 12)) + 2)) days ago
+  EDITOR="cat" journal $(($(($RANDOM % 12)) + 2)) days ago | shuf -n 5
 fi
 ```
 
@@ -94,4 +94,4 @@ alias j=journal
 
 # TODO
 
-* [ ] write a markdown-reader that picks out a random paragraph to print; use that instead of `EDITOR=head`
+* [ ] write a markdown-reader that picks out a random paragraph to print; use that instead of `EDITOR=cat | shuf -n 5`, which just picks a random set of lines
