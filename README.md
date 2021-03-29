@@ -95,3 +95,7 @@ alias j=journal
 # TODO
 
 * [ ] write a markdown-reader that picks out a random paragraph to print; use that instead of `EDITOR=cat | shuf -n 5`, which just picks a random set of lines
+* [ ] import useful features from https://journalcli.me/docs/getting-started and org-mode
+    * [ ] calendar integration
+    * [ ] reminders
+    * [ ] automatically copy unfinished TODOs forward
