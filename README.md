@@ -59,7 +59,7 @@ mkdir ~/Notebook
 ```
 # /etc/fstab
 # ...
-user@example.com:~/Notebook /home/user/Notebook fuse.sshfs idmap=user,reconnect,intr,noauto,user    0 0
+user@example.com:~/Notebook /home/user/Notebook fuse.sshfs idmap=user,reconnect,auto_unmount,transform_symlinks,noauto,user    0 0
 ```
 
 (you could also use cifs/smb/afp/WebDAV/[any of the other wild filesystem options out there](https://aur.archlinux.org/packages/?O=0&K=fuse), which would allow you to use Google Drive, Dropbox, etc)
