@@ -53,13 +53,18 @@ ln rjournal ~/.local/bin/
 **Get a remote disk somewhere**, e.g. https://rsync.net, your own server, a VPS, a NextCloud server like https://cloudamo.com/ or https://thegood.cloud/ or https://www.owncube.com/, and setup a `user`-mountable entry in `/etc/fstab` for it:
 
 ```
-mkdir ~/Notebook
+user@example.com$ mkdir ~/Notebook
+```
+
+
+```
+user@local$ mkdir ~/Notebook
 ```
 
 ```
 # /etc/fstab
 # ...
-user@example.com:~/Notebook /home/user/Notebook fuse.sshfs idmap=user,reconnect,auto_unmount,transform_symlinks,noauto,user    0 0
+user@example.com:Notebook /home/user/Notebook fuse.sshfs idmap=user,reconnect,auto_unmount,transform_symlinks,noauto,user    0 0
 ```
 
 (you could also use cifs/smb/afp/WebDAV/[any of the other wild filesystem options out there](https://aur.archlinux.org/packages/?O=0&K=fuse), which would allow you to use Google Drive, Dropbox, etc)
