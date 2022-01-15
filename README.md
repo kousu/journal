@@ -53,6 +53,10 @@ ln rjournal ~/.local/bin/
 **Get a remote disk somewhere**, e.g. https://rsync.net, your own server, a VPS, a NextCloud server like https://cloudamo.com/ or https://thegood.cloud/ or https://www.owncube.com/, and setup a `user`-mountable entry in `/etc/fstab` for it:
 
 ```
+mkdir ~/Notebook
+```
+
+```
 # /etc/fstab
 # ...
 user@example.com:~/Notebook /home/user/Notebook fuse.sshfs idmap=user,reconnect,intr,noauto,user    0 0
