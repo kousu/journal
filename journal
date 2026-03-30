@@ -6,7 +6,7 @@
 # to be filled. If DATE is not given it defaults to today.
 #
 # Environemnt variables:
-#  $EDITOR - sets what program should open the journal
+#  $$EDITOR or $JOURNAL_EDITOR - sets what program should open the journal
 #  $JOURNAL - sets the path to the journal's folder
 #
 # The date string takes a humanized format, documented at:
@@ -41,10 +41,6 @@
 # - [ ] small bug: because this calls date multiple times, it's possible (e.g. at midnight,
 #       new years, ends of months for the results to be inconsistent.
 #       it would be safer to call date *once* to get the date value, then feed it back in successively to parse it
-# - [ ] it would be nice if this didn't write to disk until the user saved manually,
-#       instead only priming the contents of the buffer for the editor.
-#       so e.g. `EDITOR=cat journal last month` would show you an empty file and not write to disk.
-#       this is probably impossible.
 
 set -e  # catch errors immediately
 
@@ -93,17 +89,35 @@ date() {
     /bin/date -d "$WHEN" "$@"
 }
 
+if [ -z "$JOURNAL_EDITOR" ]; then
+  for editor in "$EDITOR" nano vi; do
+    if command -v $EDITOR >/dev/null ; then
+      export JOURNAL_EDITOR="$editor"
+      break;
+    fi
+  done
+
+  if [ -z "$JOURNAL_EDITOR" ]; then
+    echo "error: \$JOURNAL_EDITOR undefined and no fallback installed." >/dev/stderr
+    exit 1
+  fi
+fi
+
 : ${JOURNAL:=~/Journal}
-TODAY="$(date +"%Y/%m/%d")"
-TODAY="$JOURNAL"/"$TODAY".md
+TODAY="$(date +"%Y/%m/%d").md"
 
-if [ ! -e "$TODAY" ]; then
-  mkdir -p "$(dirname "$TODAY")"
-  (header; echo; echo) >> "$TODAY"
+if [ ! -e "${JOURNAL}" ]; then
+  read -r -p "${JOURNAL} does not exist. Would you like to create it? [y/N] " RESP
+  case "$RESP" in
+    [yY])
+      ;;
+    *)
+      exit 0
+      ;;
+  esac
 fi
 
-if [ -z "$EDITOR" ]; then
-  echo "error: \$EDITOR undefined" >/dev/stderr
-  exit 1
-fi
-$EDITOR "$TODAY"
+mkdir -p "$(dirname "${JOURNAL}/${TODAY}")"
+
+cd "${JOURNAL}"
+${JOURNAL_EDITOR} "$TODAY"
