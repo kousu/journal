@@ -12,9 +12,6 @@
 # The date string takes a humanized format, documented at:
 # https://www.gnu.org/software/coreutils/manual/html_node/Date-input-formats.html
 #
-# If [git-sync](https://github.com/kousu/git-sync) is installed, syncs your journal
-# at opening and closing.
-#
 # Examples:
 #
 # If today is February 12th, 2017 then
@@ -123,13 +120,6 @@ if [ ! -e "${JOURNAL}" ]; then
 fi
 
 mkdir -p "$(dirname "${JOURNAL}/${TODAY}")"
-
-if git sync --version >/dev/null && git -C "${JOURNAL}" sync --able; then
-  # sync *in the background* to get fast startup
-  # this means of course you might need to reload the file, but hopefully your editor warns you about that
-  git -C "${JOURNAL}" sync & >/dev/null 2>&1
-  trap 'git -C "${JOURNAL}" sync' EXIT # sync but not in the background
-fi
 
 cd "${JOURNAL}"
 ${JOURNAL_EDITOR} "$TODAY"
